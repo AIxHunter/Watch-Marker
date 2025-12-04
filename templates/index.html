@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Marker - Video Progress Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Watch Marker</h1>
+            <p class="subtitle">Track your video progress</p>
+        </header>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="showFolderBrowser()">📁 Select Folder</button>
+            <span id="folder-name" class="folder-name">
+                <span class="loading-dots">Loading last folder...</span>
+            </span>
+            <div class="control-buttons">
+                <button class="btn btn-secondary" onclick="refreshVideos()">🔄 Refresh</button>
+                <button class="btn btn-secondary" onclick="clearCompleted()">🗑️ Clear Completed</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Folder History Sidebar -->
+            <aside class="folder-sidebar">
+                <h3>📁 Folders</h3>
+                <div id="folder-history" class="folder-history">
+                    <p class="empty-state">No folders yet</p>
+                </div>
+            </aside>
+
+            <!-- Video List Sidebar -->
+            <aside class="sidebar">
+                <h3>Videos <span id="video-count" class="count"></span></h3>
+                <div id="video-list" class="video-list">
+                    <p class="empty-state">Select a folder to load videos</p>
+                </div>
+            </aside>
+
+            <main class="player-section">
+                <div id="player-container" class="player-container">
+                    <video id="video-player" class="video-player" controls>
+                        Your browser does not support the video tag.
+                    </video>
+                    <div id="no-video" class="no-video">
+                        <div class="no-video-content">
+                            <span class="no-video-icon">🎥</span>
+                            <p>Select a video to start watching</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-info">
+                    <h3 id="video-title">No video loaded</h3>
+                    
+                    <div class="video-controls">
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="progress-fill" class="progress-fill"></div>
+                            </div>
+                            <div class="time-info">
+                                <span id="current-time">00:00</span>
+                                <span id="duration">00:00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <button class="btn-icon" onclick="previousVideo()" title="Previous">⏮️</button>
+                            <button class="btn-icon" id="play-pause-btn" onclick="togglePlay()" title="Play/Pause">▶️</button>
+                            <button class="btn-icon" onclick="nextVideo()" title="Next">⏭️</button>
+                            <div class="speed-control">
+                                <label>Speed:</label>
+                                <select id="speed-select" onchange="changeSpeed()">
+                                    <option value="0.5">0.5x</option>
+                                    <option value="0.75">0.75x</option>
+                                    <option value="1" selected>1x</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.5x</option>
+                                    <option value="2">2x</option>
+                                </select>
+                            </div>
+                            <div class="volume-control">
+                                <button class="btn-icon" onclick="toggleMute()" id="volume-btn">🔊</button>
+                                <input type="range" id="volume-slider" min="0" max="100" value="100" onchange="changeVolume()">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Remarks Section - Below Controls -->
+                    <div id="video-remarks" class="video-remarks"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Folder Browser Modal -->
+    <div id="folder-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Folder</h2>
+                <button class="close-btn" onclick="closeFolderBrowser()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="path-display">
+                    <strong>Current Path:</strong>
+                    <span id="current-path"></span>
+                </div>
+                <div id="folder-list" class="folder-list">
+                    <p class="loading">Loading...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeFolderBrowser()">Cancel</button>
+                <button class="btn btn-primary" onclick="confirmFolder()">Select This Folder</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
+

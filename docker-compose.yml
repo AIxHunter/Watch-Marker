@@ -1,0 +1,22 @@
+services:
+  watch-marker:
+    build: .
+    container_name: watch-marker
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mount your video folders here - adjust the paths as needed
+      - /home/d4rkc0de:/home/d4rkc0de:ro
+      # Persist database in data directory
+      - ./data:/app/data
+    environment:
+      - FLASK_ENV=production
+      - DB_PATH=/app/data/video_progress.db
+    restart: unless-stopped
+    networks:
+      - watch-marker-network
+
+networks:
+  watch-marker-network:
+    driver: bridge
+
