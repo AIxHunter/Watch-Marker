@@ -1,6 +1,6 @@
 # Watch Marker - Video Progress Tracker
 
-A web-based application that helps you track your progress while watching tutorial videos or TV shows. It automatically remembers where you left off in each video and lets you resume from that point.
+A web-based application that helps you track your progress while watching tutorial videos or TV shows downloaded locally in your PC. It automatically remembers where you left off in each video and lets you resume from that point.
 
 ## 🚀 Quick Start (Docker)
 
